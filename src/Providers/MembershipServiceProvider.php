@@ -6,11 +6,9 @@ use Botble\Base\Facades\PanelSectionManager;
 use Botble\Base\PanelSections\PanelSectionItem;
 use Botble\Base\Supports\ServiceProvider;
 use Botble\Base\Traits\LoadAndPublishDataTrait;
-use Botble\Setting\PanelSections\SettingOthersPanelSection;
-use Botble\SocialLogin\Facades\SocialService;
 use Botble\Membership\Http\Middleware\CheckDisplayHomepage;
+use Botble\Setting\PanelSections\SettingOthersPanelSection;
 use Illuminate\Routing\Events\RouteMatched;
-use Illuminate\Foundation\AliasLoader;
 
 class MembershipServiceProvider extends ServiceProvider
 {
@@ -19,14 +17,14 @@ class MembershipServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-         $this
-            ->setNamespace('plugins/membership')
-            ->loadHelpers()
-            ->loadAndPublishConfigurations(['permissions'])
-            ->loadMigrations()
-            ->loadAndPublishTranslations()
-            ->loadAndPublishViews()
-            ->loadRoutes();
+        $this
+           ->setNamespace('plugins/membership')
+           ->loadHelpers()
+           ->loadAndPublishConfigurations(['permissions'])
+           ->loadMigrations()
+           ->loadAndPublishTranslations()
+           ->loadAndPublishViews()
+           ->loadRoutes();
 
         PanelSectionManager::default()->beforeRendering(function () {
             PanelSectionManager::registerItem(
@@ -39,17 +37,10 @@ class MembershipServiceProvider extends ServiceProvider
                     ->withRoute('membership.settings')
             );
         });
-   #dd('42');
-         $this->app['events']->listen(RouteMatched::class, function () {
+
+        $this->app['events']->listen(RouteMatched::class, function () {
             $router = $this->app['router'];
             $router->pushMiddlewareToGroup('web', CheckDisplayHomepage::class);
         });
-
-       // $this->app->register(HookServiceProvider::class);
     }
-
-    // public function register(): void
-    // {
-    //     $this->app->bind(SocialService::class);
-    // }
 }
