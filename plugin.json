@@ -5,6 +5,6 @@
     "provider": "Botble\\Membership\\Providers\\MembershipServiceProvider",
     "author": "Tuan Nguyen",
     "url": null,
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Membership Manager."
 }
